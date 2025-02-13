@@ -3,7 +3,7 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="./index-without-login.html" class="text-2xl font-bold text-indigo-600">BlogSite</a>
+                    <a href="{{ url('/') }}" class="text-2xl font-bold text-indigo-600">BlogSite</a>
                 </div>
                 <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
                     <a href="./index-without-login.html"
@@ -16,9 +16,9 @@
             </div>
 
             <div class="hidden sm:ml-6 sm:flex sm:items-center">
-                <a href="/login.html"
+                <a href="{{ route('loginPage') }}"
                    class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Login</a>
-                <a href="/register.html"
+                <a href="{{ route('registerPage') }}"
                    class="bg-indigo-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-700">Register</a>
             </div>
 
