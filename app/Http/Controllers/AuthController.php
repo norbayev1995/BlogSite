@@ -70,4 +70,24 @@ class AuthController extends Controller
         Auth::logout();
         return redirect()->route('loginPage');
     }
+
+    public function resendPage()
+    {
+        return view('auth.resend');
+    }
+
+    public function resendVerification(Request $request)
+    {
+        $user = User::where('email', $request->email)->firstOrFail();
+        if(!$user){
+            return redirect()->route('loginPage')->with('error', 'Пользователь с таким email не найден.');
+        }
+        if (!is_null($user->email_verified_at)) {
+            return back()->with('success', 'Этот email уже подтверждён.');
+        }
+        $user->verification_token = Str::random(64);
+        $user->update();
+        Mail::to($user->email)->send(new SendEmailNotification($user));
+        return redirect()->route('loginPage')->with('success', 'Ссылка для подтверждения была отправлена заново!');
+    }
 }

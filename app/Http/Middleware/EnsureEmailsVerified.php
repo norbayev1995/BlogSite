@@ -16,7 +16,7 @@ class EnsureEmailsVerified
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && is_null(Auth::user()->email_veridied_at)) {
+        if (Auth::check() && is_null(Auth::user()->email_verified_at)) {
             return redirect()->route('loginPage')->with('error', 'Вам нужно подтвердить email перед входом.');
         }
         return $next($request);

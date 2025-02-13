@@ -16,3 +16,5 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login')->middleware('verify');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route:: get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verify-email');
+Route::get('/resendPage', [AuthController::class, 'resendPage'])->name('resendPage');
+Route::post('/resend-verification', [AuthController::class, 'resendVerification'])->name('resend-verification');
