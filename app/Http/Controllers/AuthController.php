@@ -58,13 +58,16 @@ class AuthController extends Controller
     {
         $validated = $request->validated();
         if (Auth::attempt($validated)){
-            $user = Auth::user();
-            if (is_null($user->email_verified_at)){
-                Auth::logout();
-                return redirect()->route('loginPage');
-            }
+            session()->regenerate();
             return redirect()->route('dashboard');
         }
+        return redirect()->route('loginPage');
+
+    }
+
+    public function logout()
+    {
+        Auth::logout();
         return redirect()->route('loginPage');
     }
 }

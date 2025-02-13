@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('title', 'Login - Blog Site')
 @section('content')
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <main class="flex-grow flex items-center justify-center">
         <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
             <h1 class="text-2xl font-bold mb-6 text-center">Login</h1>
