@@ -13,34 +13,34 @@
                     </div>
 
                     <!-- Follow/Unfollow Button and Edit Profile -->
-                    <div class="mt-4 sm:mt-0 sm:ml-auto">
-                        <!-- Conditional Follow/Unfollow -->
-                        <!-- Assuming you have some backend logic to check if the user is already followed -->
-                        @if(auth()->user()->isFollowing($user))
-                            <form action="{{ route('unfollow', $user->id) }}" method="post">
-                                @csrf
-                                <button id="followButton"
-                                        type="submit"
-                                        class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                    Unfollow
-                                </button>
-                            </form>
-                        @else
-                            <form action="{{ route('follow', $user->id) }}" method="post">
-                                @csrf
-                                <button id="followButton"
-                                        type="submit"
-                                        class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                    Follow
-                                </button>
-                            </form>
-                        @endif
-                    </div>
+                    @if(!$user->id == auth()->user()->id)
+                        <div class="mt-4 sm:mt-0 sm:ml-auto">
+                            @if(auth()->user()->isFollowing($user))
+                                <form action="{{ route('unfollow', $user->id) }}" method="post">
+                                    @csrf
+                                    <button id="followButton"
+                                            type="submit"
+                                            class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                        Unfollow
+                                    </button>
+                                </form>
+                            @else
+                                <form action="{{ route('follow', $user->id) }}" method="post">
+                                    @csrf
+                                    <button id="followButton"
+                                            type="submit"
+                                            class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        Follow
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+                    @endif
                 </div>
 
                 <div class="flex flex-wrap justify-center sm:justify-start space-x-4">
-                    <span class="font-semibold">150 Followers</span>
-                    <span class="font-semibold">100 Following</span>
+                    <span class="font-semibold">{{$user->followers()->count()}} Followers</span>
+                    <span class="font-semibold">{{$user->following()->count()}} Following</span>
                     <span class="font-semibold">50 Posts</span>
                 </div>
             </div>
