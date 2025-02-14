@@ -16,14 +16,25 @@
                     <div class="mt-4 sm:mt-0 sm:ml-auto">
                         <!-- Conditional Follow/Unfollow -->
                         <!-- Assuming you have some backend logic to check if the user is already followed -->
-                        <button id="followButton"
-                                class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Follow
-                        </button>
-                        <button id="followButton"
-                                class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                            Unfollow
-                        </button>
+                        @if(auth()->user()->isFollowing($user))
+                            <form action="{{ route('unfollow', $user->id) }}" method="post">
+                                @csrf
+                                <button id="followButton"
+                                        type="submit"
+                                        class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                    Unfollow
+                                </button>
+                            </form>
+                        @else
+                            <form action="{{ route('follow', $user->id) }}" method="post">
+                                @csrf
+                                <button id="followButton"
+                                        type="submit"
+                                        class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    Follow
+                                </button>
+                            </form>
+                        @endif
                     </div>
                 </div>
 
