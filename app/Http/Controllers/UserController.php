@@ -45,4 +45,10 @@ class UserController extends Controller
         }
         return redirect()->route('user-profile');
     }
+
+    public function authorProfile($id)
+    {
+        $user = User::find($id);
+        return view('user.author-profile', compact('user'));
+    }
 }
