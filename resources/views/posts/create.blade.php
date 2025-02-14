@@ -4,7 +4,7 @@
     <main class="flex-grow container mx-auto px-4 py-8">
         <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
             <h1 class="text-2xl font-bold mb-6">Create New Post</h1>
-            <p class="mb-6"><a href="{{ route('posts.index') }}" class="text-indigo-600 hover:text-indigo-800">Back</a>
+            <p class="mb-6"><a href="{{ route('allPosts') }}" class="text-indigo-600 hover:text-indigo-800">Back</a>
             </p>
             <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
                 @csrf

@@ -11,7 +11,7 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function allPosts()
     {
         $posts = Post::with('user')->get();
         return view('posts.index', compact('posts'));
@@ -41,7 +41,7 @@ class PostController extends Controller
             $file->storeAs('images', $extension, 'public');
             $post->image()->create(['url' => 'images/'.$extension]);
         }
-        return redirect()->route('posts.index');
+        return redirect()->route('allPosts');
     }
 
     /**
@@ -78,7 +78,7 @@ class PostController extends Controller
             $file->storeAs('images', $extension, 'public');
             $post->image()->create(['url' => 'images/'.$extension]);
         }
-        return redirect()->route('posts.index');
+        return redirect()->route('allPosts');
     }
 
     /**
@@ -91,6 +91,6 @@ class PostController extends Controller
             $post->image()->delete();
         }
         $post->delete();
-        return redirect()->route('posts.index');
+        return redirect()->route('allPosts');
     }
 }
