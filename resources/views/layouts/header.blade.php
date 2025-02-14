@@ -59,13 +59,13 @@
                                 id="user-menu" aria-expanded="false" aria-haspopup="true"
                                 onclick="document.getElementById('profile-dropdown').classList.toggle('hidden')">
                             <span class="sr-only">Open user menu</span>
-                            <img class="h-8 w-8 rounded-full" src="{{ 'storage/'.auth()->user()->image->url }}" alt="User image">
+                            <img class="h-8 w-8 rounded-full" src="{{ asset('storage/'.auth()->user()->image->url) }}" alt="User image">
                         </button>
 
                         <!-- Profile Dropdown -->
                         <div class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5"
                              id="profile-dropdown" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                            <a href="{{ route('user-profile', ['id' => auth()->user()->id]) }}"
+                            <a href="{{ route('user-profile') }}"
                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your
                                 Profile</a>
                             <a href="{{ route('logout') }}"
@@ -129,10 +129,13 @@
                     <span class="text-base font-medium">Profile</span>
                 </button>
                 <div class="hidden mt-2 space-y-1 bg-white rounded-md shadow-lg" id="mobile-profile-dropdown">
-                    <a href="{{ route('user-profile', ['id' => auth()->user()->id]) }}"
-                       class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Your Profile</a>
-                    <a href="{{ route('logout') }}"
-                       class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Logout</a>
+                    @if(\Illuminate\Support\Facades\Auth::check())
+                        <a href="{{ route('user-profile') }}"
+                           class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Your Profile</a>
+                    @else
+                        <a href="{{ route('logout') }}"
+                           class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Logout</a>
+                    @endif
                 </div>
             </div>
 

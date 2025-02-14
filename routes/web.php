@@ -11,7 +11,9 @@ Route::get('/', function () {
 
 
 Route::middleware(['auth', 'verify'])->group(function () {
-    Route::get('/user-profile/{id}', [UserController::class, 'profile'])->name('user-profile');
+    Route::get('/user-profile', [UserController::class, 'profile'])->name('user-profile');
+    Route::get('/edit-profile/{id}', [UserController::class, 'editProfile'])->name('edit-profile');
+    Route::put('/update-profile/{id}', [UserController::class, 'updateProfile'])->name('update-profile');
     Route::get('posts', [PostController::class, 'allPosts'])->name('allPosts');
     Route::get('posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('posts', [PostController::class, 'store'])->name('posts.store');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -69,8 +70,8 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->update();
         if ($request->hasFile('image')) {
-            if (asset('storage/'.$post->image->url)){
-                unlink('storage/'.$post->image->url);
+            if (Storage::exists('storage/'.$post->image->url)){
+                Storage::delete('storage/'.$post->image->url);
                 $post->image()->delete();
             }
             $file = $request->file('image');
