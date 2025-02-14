@@ -18,31 +18,29 @@
 
             <h2 class="text-2xl font-bold mb-4">Comments</h2>
             <div class="space-y-4 mb-6">
-                <div class="bg-gray-50 p-4 rounded-lg flex justify-between">
-                    <div>
-                        <p class="font-semibold">John Doe</p>
-                        <p class="text-gray-700">Great post! Thanks for sharing.</p>
+                @forelse($post->comments as $comment)
+                    <div class="bg-gray-50 p-4 rounded-lg flex justify-between">
+                        <div>
+                            <p class="font-semibold">{{ $comment->user->name }}</p>
+                            <p class="text-gray-700">{{ $comment->content }}</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <form action="{{ route('comments.destroy', ['id' => $comment->id]) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="flex space-x-2">
-                        <a href="#" class="text-red-500 hover:text-red-700">Delete</a>
-                    </div>
-                </div>
-                <div class="bg-gray-50 p-4 rounded-lg flex justify-between">
-                    <div>
-                        <p class="font-semibold">Jane Smith</p>
-                        <p class="text-gray-700">I found this very informative. Looking forward to more content like
-                            this!
-                        </p>
-                    </div>
-                    <div class="flex space-x-2">
-                        <a href="#" class="text-red-500 hover:text-red-700">Delete</a>
-                    </div>
-                </div>
+                @empty
+                    <div class="alert alert-info text-center">No comments</div>
+                @endforelse
             </div>
 
-            <form>
+            <form action="{{ route('comments.store', ['id' => $post->id]) }}" method="post">
+                @csrf
                 <h3 class="text-xl font-bold mb-2">Add a Comment</h3>
-                <textarea id="comment" name="comment" rows="3" required
+                <textarea id="comment" name="content" rows="3" required
                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                           placeholder="Write your comment here..."></textarea>
                 <button type="submit"

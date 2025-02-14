@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PostController;
@@ -28,6 +29,8 @@ Route::middleware(['auth', 'verify'])->group(function () {
     Route::post('/notifications/{id}', [NotificationController::class, 'read'])->name('notifications.read');
     Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
     Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
+    Route::post('/comment/{id}', [CommentController::class, 'store'])->name('comments.store');
+    Route::delete('/comment/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
 });
 
 Route::get('/loginPage', [AuthController::class, 'loginPage'])->name('loginPage');
