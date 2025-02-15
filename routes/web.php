@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PostController::class, 'allPosts'])->name('dashboard');
+Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
 
 Route::middleware(['auth', 'verify'])->group(function () {
@@ -19,7 +20,6 @@ Route::middleware(['auth', 'verify'])->group(function () {
     Route::get('posts', [PostController::class, 'allPosts'])->name('allPosts');
     Route::get('posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('posts', [PostController::class, 'store'])->name('posts.store');
-    Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
     Route::get('posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
     Route::put('posts/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');

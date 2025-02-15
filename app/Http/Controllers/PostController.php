@@ -20,14 +20,9 @@ class PostController extends Controller
 
     public function followedPosts()
     {
-//        $user = auth()->user();
-//        $posts = Post::whereIn('user_id', $user->following()->pluck('id'))->get();
-//        return view('posts.followedPosts', compact('posts'));
         $user = auth()->user();
-        $followedUserIds = $user->following()->pluck('users.id'); // Явно указать таблицу 'users'
-
+        $followedUserIds = $user->following()->pluck('users.id');
         $posts = Post::whereIn('user_id', $followedUserIds)->latest()->get();
-
         return view('posts.followedPosts', compact('posts'));
 
     }
@@ -72,7 +67,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        if (auth()->user()->isOwnerOf($post)){
+            return view('posts.edit', compact('post'));
+        }
+        return redirect()->back();
     }
 
     /**
@@ -80,20 +78,23 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        $post->title = $request->title;
-        $post->description = $request->description;
-        $post->update();
-        if ($request->hasFile('image')) {
-            if (Storage::exists('storage/'.$post->image->url)){
-                Storage::delete('storage/'.$post->image->url);
-                $post->image()->delete();
+        if (auth()->user()->isOwnerOf($post)){
+            $post->title = $request->title;
+            $post->description = $request->description;
+            $post->update();
+            if ($request->hasFile('image')) {
+                if (Storage::exists('storage/'.$post->image->url)){
+                    Storage::delete('storage/'.$post->image->url);
+                    $post->image()->delete();
+                }
+                $file = $request->file('image');
+                $extension = time().'.'.$file->getClientOriginalExtension();
+                $file->storeAs('images', $extension, 'public');
+                $post->image()->create(['url' => 'images/'.$extension]);
             }
-            $file = $request->file('image');
-            $extension = time().'.'.$file->getClientOriginalExtension();
-            $file->storeAs('images', $extension, 'public');
-            $post->image()->create(['url' => 'images/'.$extension]);
+            return redirect()->route('allPosts');
         }
-        return redirect()->route('allPosts');
+        return redirect()->back();
     }
 
     /**
@@ -101,11 +102,14 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if (asset('storage/'.$post->image->url)){
-            unlink('storage/'.$post->image->url);
-            $post->image()->delete();
+        if (auth()->user()->isOwnerOf($post)){
+            if (asset('storage/'.$post->image->url)){
+                unlink('storage/'.$post->image->url);
+                $post->image()->delete();
+            }
+            $post->delete();
+            return redirect()->route('allPosts');
         }
-        $post->delete();
-        return redirect()->route('allPosts');
+        return redirect()->back();
     }
 }
