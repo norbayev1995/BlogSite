@@ -8,9 +8,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::get('/', [PostController::class, 'allPosts'])->name('dashboard');
 
 
 Route::middleware(['auth', 'verify'])->group(function () {
@@ -31,6 +29,8 @@ Route::middleware(['auth', 'verify'])->group(function () {
     Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
     Route::post('/comment/{id}', [CommentController::class, 'store'])->name('comments.store');
     Route::delete('/comment/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+    Route::get('/followedPosts', [PostController::class, 'followedPosts'])->name('followedPosts');
 });
 
 Route::get('/loginPage', [AuthController::class, 'loginPage'])->name('loginPage');

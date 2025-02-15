@@ -2,13 +2,7 @@
 @section('title', 'All Posts - Blog Site')
 @section('content')
     <main class="flex-grow container mx-auto px-4 py-8">
-        <div class="bg-white rounded-lg shadow-md p-8 text-center">
-            <h2 class="text-2xl font-bold mb-4">Welcome to BlogSite!</h2>
-            <p class="text-lg text-gray-500 mb-8">Please <a class="text-indigo-500 hover:text-indigo-700 underline"
-                                                            href="/login.html">Log in</a> or <a class="text-indigo-500 hover:text-indigo-700 underline"
-                                                                                                href="/register.html">Sign up</a> to view all posts.</p>
-        </div>
-        <h1 class="text-3xl font-bold my-6">All Posts</h1>
+        <h1 class="text-3xl font-bold mb-6">Followed Authors Posts</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($posts as $post)
                 <div class="bg-white p-6 rounded-lg shadow-md">
@@ -25,4 +19,11 @@
             @endforelse
         </div>
     </main>
+{{--@foreach($posts as $post)--}}
+{{--    <div class="post">--}}
+{{--        <h3>{{ $post->user->name }}</h3>--}}
+{{--        <p>{{ $post->title }}</p>--}}
+{{--        <p>{{ $post->description }}</p>--}}
+{{--    </div>--}}
+{{--@endforeach--}}
 @endsection

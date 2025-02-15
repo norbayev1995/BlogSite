@@ -36,17 +36,18 @@
                     <div class="alert alert-info text-center">No comments</div>
                 @endforelse
             </div>
-
-            <form action="{{ route('comments.store', ['id' => $post->id]) }}" method="post">
-                @csrf
-                <h3 class="text-xl font-bold mb-2">Add a Comment</h3>
-                <textarea id="comment" name="content" rows="3" required
-                          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                          placeholder="Write your comment here..."></textarea>
-                <button type="submit"
-                        class="mt-2 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Submit
-                    Comment</button>
-            </form>
+            @if(\Illuminate\Support\Facades\Auth::check())
+                <form action="{{ route('comments.store', ['id' => $post->id]) }}" method="post">
+                    @csrf
+                    <h3 class="text-xl font-bold mb-2">Add a Comment</h3>
+                    <textarea id="comment" name="content" rows="3" required
+                              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                              placeholder="Write your comment here..."></textarea>
+                    <button type="submit"
+                            class="mt-2 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Submit
+                        Comment</button>
+                </form>
+            @endif
         </article>
     </main>
 @endsection

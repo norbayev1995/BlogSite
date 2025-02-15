@@ -6,7 +6,7 @@
                     <a href="{{ url('/') }}" class="text-2xl font-bold text-indigo-600">BlogSite</a>
                 </div>
                 <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-                    <a href="{{ url('/') }}"
+                    <a href="{{ route('followedPosts') }}"
                        class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Home</a>
                     <a href="{{ route('allPosts') }}"
                        class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">All
@@ -39,16 +39,18 @@
                     </button>
 
                     <!-- Notifications Dropdown -->
-                    <div class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5"
-                         id="notifications-dropdown" role="menu" aria-orientation="vertical"
-                         aria-labelledby="notifications-menu">
-                        <a href="{{ route('notifications') }}}}"
-                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">You have
-                            {{ auth()->user()->unreadNotifications->count() }} new follower</a>
-                        <a href="./show-post.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                           role="menuitem">You have 1
-                            new comment</a>
-                    </div>
+                    @if(\Illuminate\Support\Facades\Auth::check())
+                        <div class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5"
+                             id="notifications-dropdown" role="menu" aria-orientation="vertical"
+                             aria-labelledby="notifications-menu">
+                            <a href="{{ route('notifications') }}}}"
+                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">You have
+                                {{ auth()->user()->unreadNotifications->count() }} new follower</a>
+                            <a href="./show-post.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                               role="menuitem">You have 1
+                                new comment</a>
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Profile Dropdown -->

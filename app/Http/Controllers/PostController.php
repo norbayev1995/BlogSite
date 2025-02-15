@@ -18,6 +18,20 @@ class PostController extends Controller
         return view('posts.index', compact('posts'));
     }
 
+    public function followedPosts()
+    {
+//        $user = auth()->user();
+//        $posts = Post::whereIn('user_id', $user->following()->pluck('id'))->get();
+//        return view('posts.followedPosts', compact('posts'));
+        $user = auth()->user();
+        $followedUserIds = $user->following()->pluck('users.id'); // Явно указать таблицу 'users'
+
+        $posts = Post::whereIn('user_id', $followedUserIds)->latest()->get();
+
+        return view('posts.followedPosts', compact('posts'));
+
+    }
+
     /**
      * Show the form for creating a new resource.
      */
