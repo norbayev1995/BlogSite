@@ -18,7 +18,7 @@ Route::middleware(['auth', 'verify'])->group(function () {
     Route::put('/update-profile/{id}', [UserController::class, 'updateProfile'])->name('update-profile');
     Route::get('author-profile/{id}', [UserController::class, 'authorProfile'])->name('author-profile');
     Route::get('posts', [PostController::class, 'allPosts'])->name('allPosts');
-    Route::get('posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('posts', [PostController::class, 'store'])->name('posts.store');
     Route::get('posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
     Route::put('posts/{post}', [PostController::class, 'update'])->name('posts.update');
@@ -29,7 +29,6 @@ Route::middleware(['auth', 'verify'])->group(function () {
     Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
     Route::post('/comment/{id}', [CommentController::class, 'store'])->name('comments.store');
     Route::delete('/comment/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
-
     Route::get('/followedPosts', [PostController::class, 'followedPosts'])->name('followedPosts');
 });
 

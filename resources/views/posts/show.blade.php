@@ -8,12 +8,16 @@
             <p class="text-gray-700 mb-6">{{ $post->description }}</p>
 
             <div class="flex justify-end space-x-2">
-                <a href="{{ route('posts.edit', ['post' => $post]) }}" class="text-indigo-600 hover:text-indigo-800">Edit</a>
-                <form action="{{ route('posts.destroy', ['post' => $post]) }}" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
-                </form>
+                @if(\Illuminate\Support\Facades\Auth::check())
+                    @if(auth()->user()->isOwnerOf($post))
+                        <a href="{{ route('posts.edit', ['post' => $post]) }}" class="text-indigo-600 hover:text-indigo-800">Edit</a>
+                        <form action="{{ route('posts.destroy', ['post' => $post]) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
+                        </form>
+                    @endif
+                @endif
             </div>
 
             <h2 class="text-2xl font-bold mb-4">Comments</h2>
@@ -25,11 +29,15 @@
                             <p class="text-gray-700">{{ $comment->content }}</p>
                         </div>
                         <div class="flex space-x-2">
-                            <form action="{{ route('comments.destroy', ['id' => $comment->id]) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
-                            </form>
+                            @if(\Illuminate\Support\Facades\Auth::check())
+                                @if(auth()->user()->isOwnerOf($post))
+                                    <form action="{{ route('comments.destroy', ['id' => $comment->id]) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
+                                    </form>
+                                @endif
+                            @endif
                         </div>
                     </div>
                 @empty

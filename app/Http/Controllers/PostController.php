@@ -24,7 +24,6 @@ class PostController extends Controller
         $followedUserIds = $user->following()->pluck('users.id');
         $posts = Post::whereIn('user_id', $followedUserIds)->latest()->get();
         return view('posts.followedPosts', compact('posts'));
-
     }
 
     /**
