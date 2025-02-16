@@ -47,9 +47,11 @@
                         <div class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5"
                              id="notifications-dropdown" role="menu" aria-orientation="vertical"
                              aria-labelledby="notifications-menu">
-                            <a href="{{ route('notifications') }}}}"
-                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">You have
-                                {{ auth()->user()->unreadNotifications->count() }} new follower</a>
+                            @if(auth()->user()->unreadNotifications->count() == 1)
+                                <a href="{{ route('notifications') }}"
+                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">You have
+                                    {{ auth()->user()->unreadNotifications->count() }} new follower</a>
+                            @endif
                             <a href="./show-post.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                role="menuitem">You have 1
                                 new comment</a>

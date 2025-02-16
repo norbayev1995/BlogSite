@@ -10,11 +10,13 @@
             <div class="list-group">
                 @foreach($notifications as $notification)
                     <div class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            {{ $notification->data['followed_name'] }}
-                            <small class="text-muted d-block">{{ $notification->created_at->diffForHumans() }}</small>
-                        </div>
-                        <form action="{{ route('notifications.read', $notification->id) }}">
+                        <a href="{{ route('author-profile', ['id' => $notification->data['follower_id']]) }}">
+                            <div>
+                                {{ $notification->data['follower_name'] }}
+                                <small class="text-muted d-block">{{ $notification->created_at->diffForHumans() }}</small>
+                            </div>
+                        </a>
+                        <form action="{{ route('notifications.read', $notification->id) }}" method="post">
                             @csrf
                             <button type="submit" class="btn btn-sm btn-success">Прочитано</button>
                         </form>
