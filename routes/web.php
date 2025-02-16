@@ -9,8 +9,6 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PostController::class, 'allPosts'])->name('dashboard');
-Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
-
 
 Route::middleware(['auth', 'verify'])->group(function () {
     Route::get('/user-profile', [UserController::class, 'profile'])->name('user-profile');
@@ -31,6 +29,7 @@ Route::middleware(['auth', 'verify'])->group(function () {
     Route::delete('/comment/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
     Route::get('/followedPosts', [PostController::class, 'followedPosts'])->name('followedPosts');
 });
+Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
 Route::get('/loginPage', [AuthController::class, 'loginPage'])->name('loginPage');
 Route::get('/registerPage', [AuthController::class, 'registerPage'])->name('registerPage');
