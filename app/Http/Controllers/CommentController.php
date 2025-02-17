@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Post;
+use App\Notifications\CommentsNotification;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -15,6 +16,7 @@ class CommentController extends Controller
             'user_id' => auth()->id(),
             'content' => $request->input('content'),
         ]);
+        $post->user->notify(new CommentsNotification(auth()->user(), $post));
         return redirect()->back();
     }
 

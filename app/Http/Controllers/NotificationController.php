@@ -6,16 +6,24 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    public function index()
+    public function followNotifications()
     {
-        $notifications = auth()->user()->unreadNotifications;
+        $notifications = auth()->user()->unreadNotifications->where('type', 'App\Notifications\FollowedNotification');
         return view('notifications.index', compact('notifications'));
+    }
+
+    public function commentNotifications()
+    {
+        $notifications = auth()->user()->unreadNotifications->where('type', 'App\Notifications\CommentsNotification');
+        return view('notifications.comment', compact('notifications'));
     }
 
     public function read($id)
     {
-        $notifications = auth()->user()->unreadNotifications->where('id', $id)->first();
-        $notifications->markAsRead();
+        $notification = auth()->user()->unreadNotifications->find($id);
+        if ($notification) {
+            $notification->markAsRead();
+        }
         return redirect()->back();
     }
 }

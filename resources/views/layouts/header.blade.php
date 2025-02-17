@@ -47,14 +47,25 @@
                         <div class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5"
                              id="notifications-dropdown" role="menu" aria-orientation="vertical"
                              aria-labelledby="notifications-menu">
-                            @if(auth()->user()->unreadNotifications->count() == 1)
-                                <a href="{{ route('notifications') }}"
-                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">You have
-                                    {{ auth()->user()->unreadNotifications->count() }} new follower</a>
+                            @php
+                                $followNotifications = auth()->user()->unreadNotifications->where('type', 'App\Notifications\FollowedNotification');
+                                $commentNotifications = auth()->user()->unreadNotifications->where('type', 'App\Notifications\CommentsNotification');
+                            @endphp
+                            @if($followNotifications->count() > 0)
+                                <a href="{{ route('followNotifications') }}"
+                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                    You have {{ $followNotifications->count() }} new follower{{ $followNotifications->count() > 1 ? 's' : '' }}
+                                </a>
                             @endif
-                            <a href="./show-post.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                               role="menuitem">You have 1
-                                new comment</a>
+                            @if($commentNotifications->count() > 0)
+                                <a href="{{ route('commentNotifications') }}"
+                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                    You have {{ $commentNotifications->count() }} new comment{{ $commentNotifications->count() > 1 ? 's' : '' }}
+                                </a>
+                            @endif
+                            @if($followNotifications->count() == 0 && $commentNotifications->count() == 0)
+                                <p class="block px-4 py-2 text-sm text-gray-500">No new notifications</p>
+                            @endif
                         </div>
                     @endif
                 </div>

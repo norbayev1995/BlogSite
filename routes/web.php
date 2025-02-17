@@ -21,7 +21,8 @@ Route::middleware(['auth', 'verify'])->group(function () {
     Route::get('posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
     Route::put('posts/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
-    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
+    Route::get('/followNotifications', [NotificationController::class, 'followNotifications'])->name('followNotifications');
+    Route::get('/commentNotifications', [NotificationController::class, 'commentNotifications'])->name('commentNotifications');
     Route::post('/notifications/{id}', [NotificationController::class, 'read'])->name('notifications.read');
     Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
     Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');

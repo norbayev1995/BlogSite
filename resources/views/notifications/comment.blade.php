@@ -10,9 +10,9 @@
                 <div class="list-group">
                     @foreach($notifications as $notification)
                         <div class="list-group-item d-flex justify-content-between align-items-center">
-                            <a href="{{ route('author-profile', ['id' => $notification->data['follower_id']]) }}">
+                            <a href="{{ route('author-profile', ['id' => $notification->data['user_id']]) }}">
                                 <div>
-                                    {{ $notification->data['follower_name'] }}
+                                    {{ $notification->data['message'] }}
                                     <small class="text-muted d-block">{{ $notification->created_at->diffForHumans() }}</small>
                                 </div>
                             </a>
